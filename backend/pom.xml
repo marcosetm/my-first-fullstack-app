@@ -60,6 +60,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- spring security -->
+		<!--https://docs.spring.io/spring-security/reference/features/integrations/cryptography.html -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
