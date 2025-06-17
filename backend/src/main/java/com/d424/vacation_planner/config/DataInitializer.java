@@ -1,8 +1,5 @@
 package com.d424.vacation_planner.config;
 
-import com.d424.vacation_planner.dao.ExcursionRepository;
-import com.d424.vacation_planner.dao.UserRepository;
-import com.d424.vacation_planner.dao.VacationRepository;
 import com.d424.vacation_planner.entity.Excursion;
 import com.d424.vacation_planner.entity.User;
 import com.d424.vacation_planner.entity.Vacation;
@@ -14,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Configuration
 public class DataInitializer {
@@ -58,7 +54,7 @@ public class DataInitializer {
                         // Create sample excursion
                         Excursion excursion = new Excursion();
                         excursion.setName("Montijo");
-                        excursion.setStartTime(LocalDate.of(2025, 7, 4));
+                        excursion.setStartDate(LocalDate.of(2025, 7, 4));
                         excursion.setVacation(vacation);
 
                         excursionService.saveExcursion(excursion);

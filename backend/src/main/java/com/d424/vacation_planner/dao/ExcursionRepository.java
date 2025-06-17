@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ExcursionRepository extends JpaRepository<Excursion, Long> {
     List<Excursion> findAllByVacation(Vacation vacation);
+    List<Excursion> findByVacationId(Long vacationId);
 }

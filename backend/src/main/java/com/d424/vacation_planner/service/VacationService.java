@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -19,12 +20,22 @@ public class VacationService {
         return vacationRepository.save(vacation);
     }
 
+    public Vacation createVacation(User user, Vacation vacation) {
+        vacation.setUser(user);
+        return vacationRepository.save(vacation);
+    }
+
     public List<Vacation> getVacationsByUser(User user){
         return vacationRepository.findByUser(user);
     }
 
-    public Optional<Vacation> getVacationById(Long id){
-        return vacationRepository.findById(id);
+    public List<Vacation> getVacationsByUser(Long userId) {
+        return vacationRepository.findByUserId(userId);
+    }
+
+    public Vacation getVacationById(Long id){
+        return vacationRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Vacation with ID " + id + " not found"));
     }
 
     public void deleteVacation(Long id){

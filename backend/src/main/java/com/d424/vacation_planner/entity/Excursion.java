@@ -1,6 +1,7 @@
 package com.d424.vacation_planner.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,10 @@ public class Excursion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Excursion name cannot be blank")
     private String name;
-    private LocalDate startTime;
+
+    private LocalDate startDate;
 
     @ManyToOne
     @JoinColumn(name = "vacation_id", nullable = false)

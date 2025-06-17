@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface VacationRepository extends JpaRepository<Vacation, Long> {
     List<Vacation> findByUser(User user);
+    List<Vacation> findByUserId(Long userId);
 }

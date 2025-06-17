@@ -18,13 +18,21 @@ public class ExcursionService {
     public Excursion saveExcursion(Excursion excursion) {
         return excursionRepository.save(excursion);
     }
+    public Excursion createExcursion(Vacation vacation, Excursion excursion) {
+        excursion.setVacation(vacation);
+        return excursionRepository.save(excursion);
+    }
 
     public List<Excursion> getExcursionsByVacation(Vacation vacation){
         return excursionRepository.findAllByVacation(vacation);
     }
 
-    public Optional<Excursion> getExcursionById(Long id){
+    public Optional<Excursion> findByVacationId(Long id){
         return excursionRepository.findById(id);
+    }
+
+    public List<Excursion> getExcursionsByVacationId(Long vacationId) {
+        return excursionRepository.findByVacationId(vacationId);
     }
 
     public void deleteExcursionById(Long id){
