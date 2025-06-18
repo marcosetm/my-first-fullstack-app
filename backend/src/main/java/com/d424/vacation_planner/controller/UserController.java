@@ -1,13 +1,15 @@
 package com.d424.vacation_planner.controller;
 
+import com.d424.vacation_planner.dto.LoginRequestDto;
 import com.d424.vacation_planner.dto.UserDto;
 import com.d424.vacation_planner.entity.User;
-import com.d424.vacation_planner.entity.Vacation;
 import com.d424.vacation_planner.mapper.UserMapper;
 import com.d424.vacation_planner.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,10 +19,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     // POST /api/users
@@ -30,6 +34,21 @@ public class UserController {
         User registeredUser = userService.registerUser(user);
         UserDto responseDto = UserMapper.toDto(registeredUser);
         return ResponseEntity.ok(responseDto);
+    }
+
+    // POST /api/users/login
+    // Login
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
+        return userService.getUserByEmail(request.getEmail())
+                .map(user -> {
+                    if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                        return ResponseEntity.ok(UserMapper.toDto(user));
+                    } else {
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials.");
+                    }
+                })
+                .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials."));
     }
 
     // GET /api/users
