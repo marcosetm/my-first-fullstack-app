@@ -25,7 +25,7 @@ public class DataInitializer {
 
             // Check if sample exists
             String sampleUserEmail = "jane.doe@example.com";
-            User sampleUser = userService.findUserByEmail(sampleUserEmail).orElse(null);
+            User sampleUser = userService.getUserByEmail(sampleUserEmail).orElse(null);
 
             if (sampleUser == null) {
                 User user = new User();

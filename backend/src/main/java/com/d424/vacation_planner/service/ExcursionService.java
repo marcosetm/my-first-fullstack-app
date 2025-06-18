@@ -18,7 +18,13 @@ public class ExcursionService {
     public Excursion saveExcursion(Excursion excursion) {
         return excursionRepository.save(excursion);
     }
+
     public Excursion createExcursion(Vacation vacation, Excursion excursion) {
+        excursion.setVacation(vacation);
+        return excursionRepository.save(excursion);
+    }
+
+    public Excursion updateExcursion(Vacation vacation, Excursion excursion) {
         excursion.setVacation(vacation);
         return excursionRepository.save(excursion);
     }
@@ -27,12 +33,12 @@ public class ExcursionService {
         return excursionRepository.findAllByVacation(vacation);
     }
 
-    public Optional<Excursion> findByVacationId(Long id){
-        return excursionRepository.findById(id);
-    }
-
     public List<Excursion> getExcursionsByVacationId(Long vacationId) {
         return excursionRepository.findByVacationId(vacationId);
+    }
+
+    public Excursion getExcursionById(Long excursionId) {
+        return excursionRepository.getExcursionById(excursionId);
     }
 
     public void deleteExcursionById(Long id){

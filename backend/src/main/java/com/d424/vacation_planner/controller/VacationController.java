@@ -1,6 +1,7 @@
 package com.d424.vacation_planner.controller;
 
 import com.d424.vacation_planner.dto.VacationDto;
+import com.d424.vacation_planner.entity.Excursion;
 import com.d424.vacation_planner.entity.User;
 import com.d424.vacation_planner.entity.Vacation;
 import com.d424.vacation_planner.mapper.VacationMapper;
@@ -12,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vacations")
@@ -28,24 +27,59 @@ public class VacationController {
         this.userService = userService;
     }
 
-    // POST
-    @PostMapping
+    // POST /api/vacations/user/{userId}
+    // Create vacation for user ID
+    @PostMapping("/user/{userId}")
     public ResponseEntity<VacationDto> createVacation(
-            @RequestParam Long userId,
-            @Valid @RequestBody Vacation vacationRequest) {
-        User user = userService.findUserById(userId);
-        Vacation createdVacation = vacationService.createVacation(user, vacationRequest);
+            @PathVariable Long userId,
+            @Valid @RequestBody Vacation vacationBody) {
+        User user = userService.getUserById(userId);
+        Vacation createdVacation = vacationService.createVacation(vacationBody, user);
         VacationDto dto = VacationMapper.toDto(createdVacation);
         return ResponseEntity.ok(dto);
     }
 
-    // GET /api/vacations?userId=1 for example
-    @GetMapping
-    public ResponseEntity<List<VacationDto>> getVacationsByUser(@RequestParam Long userId) {
-        List<VacationDto> vacations = vacationService.getVacationsByUser(userId)
+    // GET /api/vacations/users/{userId}
+    // Get vacations for user ID
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<VacationDto>> getVacationsByUser(@PathVariable Long userId) {
+        List<VacationDto> vacations = vacationService.getVacationsByUserId(userId)
                 .stream()
                 .map(VacationMapper::toDto)
                 .toList();
         return ResponseEntity.ok(vacations);
+    }
+
+    // GET /api/vacations/{vacationId}
+    // Get vacation details
+    @GetMapping("/{vacationId}")
+    public ResponseEntity<Vacation> getVacationsById(@PathVariable Long vacationId) {
+        Vacation vacation = vacationService.getVacationById(vacationId);
+        return ResponseEntity.ok(vacation);
+    }
+
+    // PUT /api/vacations/{vacId}
+    // Update a vacation
+    @PutMapping("/{vacationId}")
+    public ResponseEntity<VacationDto> updateVacation(
+            @PathVariable Long vacationId,
+            @Valid @RequestBody Vacation vacationBody) {
+        Vacation updatedVacation = vacationService.updateVacation(vacationBody);
+        VacationDto dto = VacationMapper.toDto(updatedVacation);
+        return ResponseEntity.ok(dto);
+    }
+    // DELETE /api/vacations/{vacId}
+    // Delete a vacation
+    @DeleteMapping("/{vacationId}")
+    public ResponseEntity<?> deleteVacation(@PathVariable Long vacationId) {
+        List<Excursion> excursions = vacationService.getExcursionsByVacationId(vacationId);
+        Vacation vacation = vacationService.getVacationById(vacationId);
+
+        if (!excursions.isEmpty()) {
+            return ResponseEntity.badRequest().body("Vacation has excursions and cannot be deleted");
+        } else {
+            vacationService.deleteVacation(vacationId);
+            return ResponseEntity.ok("Vacation " + vacation.getTitle() +  " has been deleted");
+        }
     }
 }
