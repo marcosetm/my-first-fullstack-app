@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Your Vacations</h2>
+
+  <div *ngIf="vacations.length === 0" class="alert alert-info">
+    You haven't added any vacations yet.
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let vacation of vacations">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ vacation.name }}</h5>
+          <p class="card-text">
+            Destination: {{ vacation.destination }}<br />
+            From: {{ vacation.startDate }}<br />
+            To: {{ vacation.endDate }}
+          </p>
+          <a href="#" class="btn btn-outline-primary btn-sm">View Excursions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
