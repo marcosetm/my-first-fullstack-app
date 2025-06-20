@@ -14,6 +14,6 @@ export class VacationService {
   constructor(private http: HttpClient) { }
 
   getVacationbyUserId(userId: number): Observable<Vacation[]> {
-    return this.http.get<Vacation[]>('${this.baseUrl/user/${userId}}')
+    return this.http.get<Vacation[]>(`${this.baseUrl}/user/${userId}`)
   }
 }

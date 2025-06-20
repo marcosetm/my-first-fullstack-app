@@ -19,13 +19,10 @@ public class Vacation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Vacation title must not be blank")
     private String title;
 
-    @NotBlank(message = "Start Date is required")
     private LocalDate startDate;
 
-    @NotBlank(message = "End Date is required")
     private LocalDate endDate;
 
     @ManyToOne

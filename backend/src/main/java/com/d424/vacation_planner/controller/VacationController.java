@@ -32,7 +32,7 @@ public class VacationController {
     @PostMapping("/user/{userId}")
     public ResponseEntity<VacationDto> createVacation(
             @PathVariable Long userId,
-            @Valid @RequestBody Vacation vacationBody) {
+            @RequestBody Vacation vacationBody) {
         User user = userService.getUserById(userId);
         Vacation createdVacation = vacationService.createVacation(vacationBody, user);
         VacationDto dto = VacationMapper.toDto(createdVacation);
