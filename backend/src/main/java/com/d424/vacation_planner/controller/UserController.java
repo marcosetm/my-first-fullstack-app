@@ -1,6 +1,7 @@
 package com.d424.vacation_planner.controller;
 
 import com.d424.vacation_planner.dto.LoginRequestDto;
+import com.d424.vacation_planner.dto.RegisterRequestDto;
 import com.d424.vacation_planner.dto.UserDto;
 import com.d424.vacation_planner.entity.User;
 import com.d424.vacation_planner.mapper.UserMapper;
@@ -30,8 +31,9 @@ public class UserController {
     // POST /api/users
     // Create/register a user
     @PostMapping
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
+    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody RegisterRequestDto request) {
+        User userEntity = UserMapper.toEntity(request);
+        User registeredUser = userService.registerUser(userEntity);
         UserDto responseDto = UserMapper.toDto(registeredUser);
         return ResponseEntity.ok(responseDto);
     }

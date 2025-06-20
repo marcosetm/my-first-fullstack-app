@@ -1,6 +1,7 @@
 package com.d424.vacation_planner.service;
 
 import com.d424.vacation_planner.dao.UserRepository;
+import com.d424.vacation_planner.dto.RegisterRequestDto;
 import com.d424.vacation_planner.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,9 +23,9 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User registerUser(User request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        return userRepository.save(request);
     }
 
     public Optional<User> getUserByEmail(String email) {
@@ -39,6 +40,4 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
-    // TODO: add login
 }
