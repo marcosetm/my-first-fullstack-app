@@ -24,11 +24,11 @@
           <div class="mb-3">
             <label for="loginEmail" class="form-label">Email address</label>
             <input 
-              type="email" class="form-control" id="loginEmail" placeholder="Enter email" required
+              type="email" class="form-control" id="loginEmail" placeholder="Enter email"
               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               [(ngModel)]="email"
               name="email"
-            >
+            required>
             <div class="invalid-feedback">
               Please enter a valid email address.
             </div>

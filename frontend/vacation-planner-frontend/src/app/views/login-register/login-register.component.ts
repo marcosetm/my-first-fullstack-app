@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { LoginRequest } from '../../models/loginRequest.model';
 import { CommonModule } from '@angular/common';
 import { RegisterRequest } from '../../models/registerRequest.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-register',
@@ -25,7 +26,11 @@ export class LoginRegisterComponent {
   regPassword = '';
   dateOfBirth = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService, 
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   onLogin(): void {
     const loginData: LoginRequest = {
@@ -36,6 +41,7 @@ export class LoginRegisterComponent {
     this.userService.loginUser(loginData).subscribe({
       next: (user) => {
         console.log('Logged in: ', user);
+        this.authService.login(user);
         this.router.navigate(['/vacations']);
       },
       error: (err) => {
@@ -57,6 +63,7 @@ export class LoginRegisterComponent {
     this.userService.registerUser(registerData).subscribe({
       next: (newUser) => {
         console.log('Registerd user:', newUser);
+        this.authService.login(newUser);
         this.router.navigate(['/vacations']);
       },
       error: (err) => {

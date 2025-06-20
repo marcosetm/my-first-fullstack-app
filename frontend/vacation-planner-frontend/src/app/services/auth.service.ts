@@ -1,0 +1,27 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private readonly tokenKey = 'vacation_planner_user';
+  
+  constructor() { }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  login(user: any): void {
+    localStorage.setItem(this.tokenKey, JSON.stringify(user));
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+  }
+
+  getUser(): any {
+    const storedUser = localStorage.getItem(this.tokenKey);
+    return storedUser ? JSON.parse(storedUser) : null;
+  }
+}
