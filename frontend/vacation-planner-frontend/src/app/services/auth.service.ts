@@ -9,19 +9,19 @@ export class AuthService {
   constructor() { }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem(this.tokenKey);
+    return !!sessionStorage.getItem(this.tokenKey);
   }
 
   login(user: any): void {
-    localStorage.setItem(this.tokenKey, JSON.stringify(user));
+    sessionStorage.setItem(this.tokenKey, JSON.stringify(user));
   }
 
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.tokenKey);
   }
 
   getUser(): any {
-    const storedUser = localStorage.getItem(this.tokenKey);
+    const storedUser = sessionStorage.getItem(this.tokenKey);
     return storedUser ? JSON.parse(storedUser) : null;
   }
 }
