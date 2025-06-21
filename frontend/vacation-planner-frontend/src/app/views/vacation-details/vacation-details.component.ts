@@ -6,6 +6,7 @@ import { VacationService } from '../../services/vacation.service';
 import { AuthService } from '../../services/auth.service';
 import { Vacation } from '../../models/vacation.model';
 import { ExcursionsComponent } from '../excursions/excursions.component';
+import { dateRangeValidator } from '../../validators/date-range.validator';
 
 @Component({
   selector: 'app-vacation-details',
@@ -32,7 +33,9 @@ export class VacationDetailsComponent implements OnInit {
       title: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-    });
+    },
+    { validators: dateRangeValidator }
+  );
 
     const id = this.route.snapshot.paramMap.get('id');
 

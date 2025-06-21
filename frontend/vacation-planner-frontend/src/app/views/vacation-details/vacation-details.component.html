@@ -5,18 +5,33 @@
     <div class="mb-3">
       <label class="form-label">Title</label>
       <input formControlName="title" type="text" class="form-control" />
+       <div class="text-danger" *ngIf="vacationForm.get('title')?.touched && vacationForm.get('title')?.hasError('required')">
+        Title is required.
+      </div>
     </div>
     <div class="mb-3">
       <label class="form-label">Start Date</label>
       <input formControlName="startDate" type="date" class="form-control" />
+      <div class="text-danger" *ngIf="vacationForm.get('startDate')?.touched && vacationForm.get('startDate')?.hasError('required')">
+        Start date is required.
+      </div>
+      <div class="text-danger" *ngIf="vacationForm.hasError('startDatePast') && vacationForm.get('startDate')?.touched">
+        Start date has to be a future date.
+      </div>
     </div>
     <div class="mb-3">
       <label class="form-label">End Date</label>
       <input formControlName="endDate" type="date" class="form-control" />
+      <div class="text-danger" *ngIf="vacationForm.get('endDate')?.touched && vacationForm.get('endDate')?.hasError('required')">
+        End date is required.
+      </div>
+      <div class="text-danger" *ngIf="vacationForm.hasError('dateRange') && vacationForm.get('endDate')?.touched">
+        End date must be the same as or after the start date.
+      </div>
     </div>
 
-    <button class="btn btn-success" type="submit">
-      {{ isEditMode ? 'Update' : 'Create' }}
+    <button class="btn btn-primary" type="submit" [disabled]="vacationForm.invalid">
+      {{ isEditMode ? 'Update Vacation' : 'Save Vacation' }}
     </button>
   </form>
   <button class="btn btn-outline-success" [routerLink]="['/vacations']">
