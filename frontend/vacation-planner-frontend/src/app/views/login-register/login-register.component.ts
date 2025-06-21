@@ -40,7 +40,6 @@ export class LoginRegisterComponent {
 
     this.userService.loginUser(loginData).subscribe({
       next: (user) => {
-        console.log('Logged in: ', user);
         this.authService.login(user);
         this.router.navigate(['/vacations']);
       },
@@ -62,7 +61,6 @@ export class LoginRegisterComponent {
 
     this.userService.registerUser(registerData).subscribe({
       next: (newUser) => {
-        console.log('Registerd user:', newUser);
         this.authService.login(newUser);
         this.router.navigate(['/vacations']);
       },

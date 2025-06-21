@@ -26,7 +26,8 @@ public class VacationService {
         return vacationRepository.save(vacation);
     }
 
-    public Vacation updateVacation(Vacation vacation) {
+    public Vacation updateVacation(Vacation vacation, User user) {
+        vacation.setUser(user);
         return vacationRepository.save(vacation);
     }
 
@@ -38,9 +39,8 @@ public class VacationService {
         return vacationRepository.findByUserId(userId);
     }
 
-    public Vacation getVacationById(Long id){
-        return vacationRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Vacation with ID " + id + " not found"));
+    public Vacation getVacationById(Long vacationId){
+        return vacationRepository.getVacationById(vacationId);
     }
 
     public List<Excursion> getExcursionsByVacationId(Long vacationId){

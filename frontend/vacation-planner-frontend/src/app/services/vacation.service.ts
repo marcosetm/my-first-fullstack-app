@@ -16,4 +16,20 @@ export class VacationService {
   getVacationbyUserId(userId: number): Observable<Vacation[]> {
     return this.http.get<Vacation[]>(`${this.baseUrl}/user/${userId}`)
   }
+
+  getVacationById(vacationId: number): Observable<Vacation> {
+    return this.http.get<Vacation>(`${this.baseUrl}/${vacationId}`)
+  }
+
+  createVacation(userId: number, vacationData: Vacation): Observable<Vacation[]> {
+    const createUrl = `${this.baseUrl}/user/${userId}`;
+    return this.http.post<Vacation[]>(createUrl, vacationData);
+  }
+
+  updateVacation(userId: number, vacationData: Vacation): Observable<Vacation[]> {
+    const vacationId = vacationData.id;
+    const updateUrl = `${this.baseUrl}/user/${userId}`;
+    return this.http.put<Vacation[]>(updateUrl, vacationData);
+  }
+
 }

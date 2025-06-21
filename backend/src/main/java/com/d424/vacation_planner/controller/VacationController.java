@@ -53,22 +53,24 @@ public class VacationController {
     // GET /api/vacations/{vacationId}
     // Get vacation details
     @GetMapping("/{vacationId}")
-    public ResponseEntity<Vacation> getVacationsById(@PathVariable Long vacationId) {
+    public ResponseEntity<VacationDto> getVacationsById(@PathVariable Long vacationId) {
         Vacation vacation = vacationService.getVacationById(vacationId);
-        return ResponseEntity.ok(vacation);
+        VacationDto dto = VacationMapper.toDto(vacation);
+        return ResponseEntity.ok(dto);
     }
 
     // PUT /api/vacations/{vacId}
     // Update a vacation
-    @PutMapping("/{vacationId}")
+    @PutMapping("/user/{userId}")
     public ResponseEntity<VacationDto> updateVacation(
-            @PathVariable Long vacationId,
+            @PathVariable Long userId,
             @Valid @RequestBody Vacation vacationBody) {
-        Vacation updatedVacation = vacationService.updateVacation(vacationBody);
+        User user = userService.getUserById(userId);
+        Vacation updatedVacation = vacationService.updateVacation(vacationBody, user);
         VacationDto dto = VacationMapper.toDto(updatedVacation);
         return ResponseEntity.ok(dto);
     }
-    // DELETE /api/vacations/{vacId}
+    // DELETE /api/vacations/{vacationId}
     // Delete a vacation
     @DeleteMapping("/{vacationId}")
     public ResponseEntity<?> deleteVacation(@PathVariable Long vacationId) {

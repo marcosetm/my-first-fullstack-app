@@ -4,10 +4,11 @@ import { VacationService } from '../../services/vacation.service';
 import { Vacation } from '../../models/vacation.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-vacation-list',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './vacation-list.component.html',
   styleUrl: './vacation-list.component.css'
 })

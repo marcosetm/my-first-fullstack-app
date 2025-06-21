@@ -3,4 +3,5 @@ export interface Vacation {
     title: string;
     startDate: Date;
     endDate: Date;
+    userId: number;
 }
