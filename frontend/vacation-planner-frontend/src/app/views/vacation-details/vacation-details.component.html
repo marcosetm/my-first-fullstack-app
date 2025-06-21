@@ -39,5 +39,10 @@
     </button>
 </div>
 <div class="container mt-4">
-  <app-excursions *ngIf="vacationId !== null" [vacationId]="vacationId"></app-excursions>
+  <!-- *ngIf="vacationId !== null"  -->
+  <app-excursions *ngIf="vacation" 
+    [vacationId]="vacation.id"
+    [vacationStartDate]="vacation.startDate"
+    [vacationEndDate]="vacation.endDate">
+  </app-excursions>
 </div>

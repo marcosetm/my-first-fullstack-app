@@ -19,6 +19,8 @@ export class VacationDetailsComponent implements OnInit {
   vacationForm!: FormGroup;
   isEditMode = false;
   vacationId: number | null = null;
+  vacation!: Vacation;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -43,6 +45,7 @@ export class VacationDetailsComponent implements OnInit {
       this.isEditMode = true;
       this.vacationId = +id;
       this.vacationService.getVacationById(this.vacationId).subscribe((vac) => {
+        this.vacation = vac;
         this.vacationForm.patchValue(vac);
       });
     }

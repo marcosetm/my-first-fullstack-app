@@ -4,6 +4,7 @@ import { Excursion } from '../../models/excursion.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { excursionDateValidator } from '../../validators/excursion-date.validator';
 
 @Component({
   selector: 'app-excursions',
@@ -13,6 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class ExcursionsComponent implements OnInit {
   @Input() vacationId!: number;
+  @Input() vacationStartDate!: Date;
+  @Input() vacationEndDate!: Date;
   excursions: Excursion[] = [];
   excursionForm!: FormGroup;
   selectedExcursion: Excursion | null = null;
@@ -26,7 +29,7 @@ export class ExcursionsComponent implements OnInit {
     this.loadExcursions();
     this.excursionForm = this.fb.group({
       name: ['', Validators.required],
-      date: ['', Validators.required],
+      date: ['', [Validators.required, excursionDateValidator(this.vacationStartDate, this.vacationEndDate)]],
     });
   }
 
