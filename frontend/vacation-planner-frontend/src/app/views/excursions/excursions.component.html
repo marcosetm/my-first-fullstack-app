@@ -16,22 +16,37 @@
     <input type="date" id="date" class="form-control" formControlName="date" />
   </div>
   <button class="btn btn-primary" type="submit" [disabled]="excursionForm.invalid">
-    Save Excursion
+    {{ isEditMode ? 'Update Excursion' : 'Save Excursion' }}
   </button>
 </form>
 
 <!-- Table -->
-<table class="table table-striped" *ngIf="excursions.length > 0">
+<table class="table table-hover table-striped" *ngIf="excursions.length > 0">
   <thead>
     <tr>
       <th>Name</th>
       <th>Date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let excursion of excursions">
       <td>{{ excursion.name }}</td>
       <td>{{ excursion.date | date }}</td>
+      <td>
+        <button 
+          class="btn btn-outline-primary btn-sm"
+          (click)="updateExcursion(excursion)"
+        >
+          Update
+        </button>
+        <button 
+          class="btn btn-outline-danger btn-sm"
+          (click)="deleteExcursion(excursion.id)"
+        >
+          Delete
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

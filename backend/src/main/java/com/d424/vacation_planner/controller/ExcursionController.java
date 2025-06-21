@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -67,10 +69,14 @@ public class ExcursionController {
         return ResponseEntity.ok(ExcursionMapper.toDto(updated));
     }
     // DELETE /api/excursions/{excursionId}
-    @PutMapping("/{excursionId}")
-    public ResponseEntity<String> deleteExcursion(@PathVariable Long excursionId) {
+    @DeleteMapping("/{excursionId}")
+    public ResponseEntity<?> deleteExcursion(@PathVariable Long excursionId) {
         Excursion excursion = excursionService.getExcursionById(excursionId);
+
+        Map<String, String> response = new HashMap<>();
+
         excursionService.deleteExcursionById(excursionId);
-        return ResponseEntity.ok("Excursion " + excursion.getName() + " has been deleted");
+        response.put("message", "Excursion " + excursion.getName() + " has been deleted");
+        return ResponseEntity.ok(response);
     }
 }

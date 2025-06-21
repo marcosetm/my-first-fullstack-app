@@ -15,7 +15,10 @@ export class ExcursionsComponent implements OnInit {
   @Input() vacationId!: number;
   excursions: Excursion[] = [];
   excursionForm!: FormGroup;
+  selectedExcursion: Excursion | null = null;
   showForm = false;
+  isEditMode = false;
+
 
   constructor(private excursionService: ExcursionService, private fb: FormBuilder) {}
 
@@ -29,8 +32,11 @@ export class ExcursionsComponent implements OnInit {
 
   toggleForm(): void {
     this.showForm = !this.showForm;
-    if (!this.showForm) this.excursionForm.reset();
+    this.isEditMode = false;
+    this.selectedExcursion = null;
+    this.excursionForm.reset();
   }
+
 
   loadExcursions(): void {
     this.excursionService.getExcursions(this.vacationId).subscribe({
@@ -42,19 +48,62 @@ export class ExcursionsComponent implements OnInit {
   onSubmit(): void {
     if (this.excursionForm.invalid) return;
 
-    const excursion: Excursion = {
+    const excursionData: Excursion = {
       ...this.excursionForm.value,
       vacationId: this.vacationId,
+      id: this.selectedExcursion?.id ?? 0
     };
 
-    this.excursionService.addExcursion(this.vacationId, excursion).subscribe({
-      next: () => {
-        this.excursionForm.reset();
-        this.showForm = false;
-        this.loadExcursions();
-      },
-      error: (err) => console.error('Failed to add excursion:', err),
+    if (this.isEditMode && this.selectedExcursion) {
+      this.excursionService.updateExcursion(this.vacationId, excursionData).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadExcursions();
+        },
+        error: (err) => console.error('Update failed:', err)
+      });
+    } else {
+      this.excursionService.addExcursion(this.vacationId, excursionData).subscribe({
+        next: () => {
+          this.resetForm();
+          this.loadExcursions();
+        },
+        error: (err) => console.error('Add failed:', err)
+      });
+    }
+  }
+
+  resetForm(): void {
+    this.excursionForm.reset();
+    this.showForm = false;
+    this.isEditMode = false;
+    this.selectedExcursion = null;
+  }
+
+
+  updateExcursion(excursion: Excursion): void {
+    this.showForm = true;
+    this.isEditMode = true;
+    this.selectedExcursion = excursion;
+
+    this.excursionForm.patchValue({
+      name: excursion.name,
+      date: excursion.date
     });
+  }
+
+  deleteExcursion(excursionId: number): void {
+    if (confirm('Are you sure you want to delete this vacation?')) {
+      this.excursionService.deleteExcursion(excursionId).subscribe({
+        next: () => {
+          this.loadExcursions();
+        },
+        error: (err) => {
+          console.error('Failed to delete vacation:', err);
+          alert('Failed to delete vacation.');
+        },
+      });
+    }
   }
 }
 
