@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VacationService } from '../../services/vacation.service'; 
@@ -8,7 +8,7 @@ import { Vacation } from '../../models/vacation.model';
 
 @Component({
   selector: 'app-vacation-details',
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule, RouterLink],
   templateUrl: './vacation-details.component.html',
   styleUrl: './vacation-details.component.css'
 })
@@ -54,7 +54,8 @@ export class VacationDetailsComponent implements OnInit {
     title: this.vacationForm.value.title!,
     startDate: new Date(this.vacationForm.value.startDate!),
     endDate: new Date(this.vacationForm.value.endDate!),
-    userId: user.id
+    userId: user.id,
+    excursionCount: 0 // not necessary 
   };
 
   if (this.isEditMode && this.vacationId) {

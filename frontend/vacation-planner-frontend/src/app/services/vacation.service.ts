@@ -32,4 +32,8 @@ export class VacationService {
     return this.http.put<Vacation[]>(updateUrl, vacationData);
   }
 
+  deleteVacation(vacationId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${vacationId}`);
+  }
+
 }

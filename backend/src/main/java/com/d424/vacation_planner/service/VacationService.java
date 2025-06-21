@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class VacationService {
 
     @Autowired
     private VacationRepository vacationRepository;
+
+    @Autowired
     private ExcursionService excursionService;
 
     public Vacation save(Vacation vacation) {
@@ -39,11 +40,11 @@ public class VacationService {
         return vacationRepository.findByUserId(userId);
     }
 
-    public Vacation getVacationById(Long vacationId){
+    public Vacation getVacationById(Long vacationId) {
         return vacationRepository.getVacationById(vacationId);
     }
 
-    public List<Excursion> getExcursionsByVacationId(Long vacationId){
+    public List<Excursion> getExcursionsByVacationId(Long vacationId) {
         return excursionService.getExcursionsByVacationId(vacationId);
     }
 

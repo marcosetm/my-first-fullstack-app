@@ -14,15 +14,17 @@ public class VacationDto {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long userId;
+    private int excursionCount;
 
     // Constructors
     public VacationDto() {}
 
-    public VacationDto(Long id, String title, LocalDate startDate, LocalDate endDate, Long userId) {
+    public VacationDto(Long id, String title, LocalDate startDate, LocalDate endDate, Long userId, Integer excursionCount) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.userId = userId;
+        this.excursionCount = excursionCount;
     }
 }

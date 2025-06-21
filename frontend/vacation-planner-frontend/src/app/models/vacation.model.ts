@@ -4,4 +4,5 @@ export interface Vacation {
     startDate: Date;
     endDate: Date;
     userId: number;
+    excursionCount: number;
 }

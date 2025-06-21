@@ -11,7 +11,8 @@ public class VacationMapper {
                 vacation.getTitle(),
                 vacation.getStartDate(),
                 vacation.getEndDate(),
-                vacation.getUser().getId()
+                vacation.getUser().getId(),
+                vacation.getExcursions() != null ? vacation.getExcursions().size() : 0
         );
     }
 

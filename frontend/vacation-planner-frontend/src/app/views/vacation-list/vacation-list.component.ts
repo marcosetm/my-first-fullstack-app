@@ -24,6 +24,10 @@ export class VacationListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadVacations();
+  }
+
+  loadVacations(): void {
     this.user = this.authService.getUser();      
   
     this.vacationService.getVacationbyUserId(this.user.id).subscribe({
@@ -35,5 +39,19 @@ export class VacationListComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  deleteVacation(vacationId: number): void {
+      if (confirm('Are you sure you want to delete this vacation?')) {
+      this.vacationService.deleteVacation(vacationId).subscribe({
+        next: () => {
+          this.loadVacations();
+        },
+        error: (err) => {
+          console.error('Failed to delete vacation:', err);
+          alert('Failed to delete vacation.');
+        },
+      });
+    }
   }
 }

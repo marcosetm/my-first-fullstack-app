@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/vacations")
@@ -77,11 +79,15 @@ public class VacationController {
         List<Excursion> excursions = vacationService.getExcursionsByVacationId(vacationId);
         Vacation vacation = vacationService.getVacationById(vacationId);
 
+        Map<String, String> response = new HashMap<>();
+
         if (!excursions.isEmpty()) {
-            return ResponseEntity.badRequest().body("Vacation has excursions and cannot be deleted");
+            response.put("error", "Vacation has excursions and cannot be deleted");
+            return ResponseEntity.badRequest().body(response);
         } else {
             vacationService.deleteVacation(vacationId);
-            return ResponseEntity.ok("Vacation " + vacation.getTitle() +  " has been deleted");
+            response.put("message", "Vacation " + vacation.getTitle() + " has been deleted");
+            return ResponseEntity.ok(response);
         }
     }
 }
