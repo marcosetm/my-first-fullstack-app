@@ -54,7 +54,7 @@ public class DataInitializer {
                         // Create sample excursion
                         Excursion excursion = new Excursion();
                         excursion.setName("Montijo");
-                        excursion.setStartDate(LocalDate.of(2025, 7, 4));
+                        excursion.setDate(LocalDate.of(2025, 7, 4));
                         excursion.setVacation(vacation);
 
                         excursionService.saveExcursion(excursion);

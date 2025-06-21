@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class ExcursionDto {
     private Long id;
     private String name;
-    private LocalDate startDate;
+    private LocalDate date;
     private Long vacationId;
 
     // Constructors
@@ -19,7 +19,7 @@ public class ExcursionDto {
     public ExcursionDto(Long id, String name, LocalDate startDate, Long vacationId) {
         this.id = id;
         this.name = name;
-        this.startDate = startDate;
+        this.date = startDate;
         this.vacationId = vacationId;
     }
 }

@@ -8,7 +8,7 @@ public class ExcursionDateValidator implements ConstraintValidator<ValidExcursio
 
     @Override
     public boolean isValid(Excursion excursion, ConstraintValidatorContext context) {
-        if (excursion.getStartDate() == null || excursion.getVacation() == null) {
+        if (excursion.getDate() == null || excursion.getVacation() == null) {
             return true; // Let @NotNull handle null values
         }
 
@@ -19,7 +19,7 @@ public class ExcursionDateValidator implements ConstraintValidator<ValidExcursio
             return true; // Vacation date range incomplete
         }
 
-        return !excursion.getStartDate().isBefore(vacStart) &&
-                !excursion.getStartDate().isAfter(vacEnd);
+        return !excursion.getDate().isBefore(vacStart) &&
+                !excursion.getDate().isAfter(vacEnd);
     }
 }

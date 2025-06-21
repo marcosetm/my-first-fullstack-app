@@ -23,3 +23,6 @@
       Back to Vacations
     </button>
 </div>
+<div class="container mt-4">
+  <app-excursions *ngIf="vacationId !== null" [vacationId]="vacationId"></app-excursions>
+</div>

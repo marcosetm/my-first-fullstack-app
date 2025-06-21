@@ -9,7 +9,7 @@ public class ExcursionMapper {
         return new ExcursionDto(
                 excursion.getId(),
                 excursion.getName(),
-                excursion.getStartDate(),
+                excursion.getDate(),
                 excursion.getVacation().getId()
         );
     }
@@ -18,7 +18,7 @@ public class ExcursionMapper {
         Excursion excursion = new Excursion();
         excursion.setId(excursionDto.getId());
         excursion.setName(excursionDto.getName());
-        excursion.setStartDate(excursionDto.getStartDate());
+        excursion.setDate(excursionDto.getDate());
         excursion.setId(excursionDto.getVacationId());
         return excursion;
     }

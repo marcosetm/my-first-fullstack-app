@@ -19,7 +19,7 @@ public class Excursion {
     @NotBlank(message = "Excursion name cannot be blank")
     private String name;
 
-    private LocalDate startDate;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "vacation_id", nullable = false)

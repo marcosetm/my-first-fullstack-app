@@ -1,0 +1,39 @@
+<h5 class="d-flex justify-content-between align-items-center">
+  Excursions
+  <button class="btn btn-sm btn-outline-primary" (click)="toggleForm()">
+    {{ showForm ? 'Cancel' : 'Add Excursion' }}
+  </button>
+</h5>
+
+<!-- Show form only when showForm is true -->
+<form *ngIf="showForm" [formGroup]="excursionForm" (ngSubmit)="onSubmit()" class="mb-3">
+  <div class="mb-2">
+    <label for="name" class="form-label">Excursion Name</label>
+    <input type="text" id="name" class="form-control" formControlName="name" />
+  </div>
+  <div class="mb-2">
+    <label for="date" class="form-label">Excursion Date</label>
+    <input type="date" id="date" class="form-control" formControlName="date" />
+  </div>
+  <button class="btn btn-primary" type="submit" [disabled]="excursionForm.invalid">
+    Save Excursion
+  </button>
+</form>
+
+<!-- Table -->
+<table class="table table-striped" *ngIf="excursions.length > 0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let excursion of excursions">
+      <td>{{ excursion.name }}</td>
+      <td>{{ excursion.date | date }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="excursions.length === 0">No excursions yet.</p>

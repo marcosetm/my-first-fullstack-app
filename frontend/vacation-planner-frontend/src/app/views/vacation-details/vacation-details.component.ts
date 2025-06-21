@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { VacationService } from '../../services/vacation.service'; 
 import { AuthService } from '../../services/auth.service';
 import { Vacation } from '../../models/vacation.model';
+import { ExcursionsComponent } from '../excursions/excursions.component';
 
 @Component({
   selector: 'app-vacation-details',
-  imports: [CommonModule,ReactiveFormsModule, RouterLink],
+  imports: [CommonModule,ReactiveFormsModule, RouterLink, ExcursionsComponent],
   templateUrl: './vacation-details.component.html',
   styleUrl: './vacation-details.component.css'
 })
