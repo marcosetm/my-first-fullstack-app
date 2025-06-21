@@ -7,30 +7,40 @@
     You haven't added any vacations yet.
   </div>
 
-<table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Excursions</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let vacation of vacations">
-      <td>{{ vacation.title }}</td>
-      <td>{{ vacation.excursionCount }}</td>
-      <td>{{ vacation.startDate }}</td>
-      <td>{{ vacation.endDate }}</td>
-      <td>
-        <button class="btn btn-outline-primary btn-sm" [routerLink]="['/vacations', vacation.id]">View/Update</button>
-        <button 
-          class="btn btn-outline-danger btn-sm"
-          [disabled]="vacation.excursionCount > 0"
-          (click)="deleteVacation(vacation.id)"
-        >Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search vacations..."
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Excursions</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vacation of filteredVacations">
+        <td>{{ vacation.title }}</td>
+        <td>{{ vacation.excursionCount }}</td>
+        <td>{{ vacation.startDate }}</td>
+        <td>{{ vacation.endDate }}</td>
+        <td>
+          <button class="btn btn-outline-primary btn-sm" [routerLink]="['/vacations', vacation.id]">View/Update</button>
+          <button 
+            class="btn btn-outline-danger btn-sm"
+            [disabled]="vacation.excursionCount > 0"
+            (click)="deleteVacation(vacation.id)"
+          >Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
