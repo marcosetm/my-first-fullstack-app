@@ -51,7 +51,7 @@ export class ExcursionsComponent implements OnInit {
     const excursionData: Excursion = {
       ...this.excursionForm.value,
       vacationId: this.vacationId,
-      id: this.selectedExcursion?.id ?? 0
+      id: this.selectedExcursion?.id
     };
 
     if (this.isEditMode && this.selectedExcursion) {
