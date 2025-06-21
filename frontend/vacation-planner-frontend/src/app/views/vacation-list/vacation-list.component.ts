@@ -46,7 +46,11 @@ export class VacationListComponent implements OnInit {
     this.user = this.authService.getUser();      
   
     this.vacationService.getVacationbyUserId(this.user.id).subscribe({
-      next: (data) => (this.vacations = data),
+      next: (data) => {     //(this.vacations = data),
+        this.vacations = data.sort((a, b) =>
+          new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+        );
+      },
       error: (err) => console.error('Error loading vacations:', err)
     });
   }

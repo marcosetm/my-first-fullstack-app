@@ -30,8 +30,8 @@
       <tr *ngFor="let vacation of filteredVacations">
         <td>{{ vacation.title }}</td>
         <td>{{ vacation.excursionCount }}</td>
-        <td>{{ vacation.startDate }}</td>
-        <td>{{ vacation.endDate }}</td>
+        <td>{{ vacation.startDate | date }}</td>
+        <td>{{ vacation.endDate | date }}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm" [routerLink]="['/vacations', vacation.id]">View/Update</button>
           <button 

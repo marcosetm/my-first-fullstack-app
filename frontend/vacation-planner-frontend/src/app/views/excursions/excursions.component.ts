@@ -43,7 +43,11 @@ export class ExcursionsComponent implements OnInit {
 
   loadExcursions(): void {
     this.excursionService.getExcursions(this.vacationId).subscribe({
-      next: (data) => (this.excursions = data),
+      next: (data) => { //(this.excursions = data),
+        this.excursions = data.sort((a, b) =>
+          new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+      },
       error: (err) => console.error('Failed to load excursions:', err),
     });
   }
