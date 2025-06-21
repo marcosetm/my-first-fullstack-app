@@ -34,11 +34,13 @@
         <td>{{ vacation.endDate | date }}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm" [routerLink]="['/vacations', vacation.id]">View/Update</button>
-          <button 
-            class="btn btn-outline-danger btn-sm"
-            [disabled]="vacation.excursionCount > 0"
-            (click)="deleteVacation(vacation.id)"
-          >Delete</button>
+          <span tabindex="0" title="Delete vacation with no excursions.">
+            <button 
+              class="btn btn-outline-danger btn-sm"
+              [disabled]="vacation.excursionCount > 0"
+              (click)="deleteVacation(vacation.id)"
+            >Delete</button>
+          </span>
         </td>
       </tr>
     </tbody>

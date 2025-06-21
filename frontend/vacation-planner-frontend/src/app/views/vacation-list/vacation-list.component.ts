@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-vacation-list',
   imports: [CommonModule, RouterLink, FormsModule],
@@ -36,7 +38,6 @@ export class VacationListComponent implements OnInit {
       vacation.title.toLowerCase().includes(term)
     );
   }
-
 
   ngOnInit(): void {
     this.loadVacations();
