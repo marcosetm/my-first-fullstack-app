@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Vacation } from '../models/vacation.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Vacation } from '../models/vacation.model';
 export class VacationService {
 
   // extract into a config file for production
-  private baseUrl = 'http://localhost:8080/api/vacations';
+  private baseUrl = `${environment.apiUrl}/vacations`;
 
   constructor(private http: HttpClient) { }
 

@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Excursion } from '../models/excursion.model';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExcursionService {
-  private baseUrl = 'http://localhost:8080/api/excursions';
+  private baseUrl = `${environment.apiUrl}/excursions`;
 
   constructor(private http: HttpClient) {}
 

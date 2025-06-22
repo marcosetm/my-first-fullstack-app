@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.d424</groupId>
 	<artifactId>vacation-planner</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-RELEASE</version>
 	<name>My Vacation Planner</name>
 	<description>My Vacation Planner helps simplify vacation planning for everyday users who want more than just a calendar or booking system</description>
 	<url/>
