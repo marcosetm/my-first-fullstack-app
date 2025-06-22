@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <h2>Your Vacation Report</h2>
+  <button class="btn btn-outline-success" [routerLink]="['/vacations']">
+      Back to Vacations
+  </button>
+  <div *ngIf="!objectKeys(groupedVacations).length" class="alert alert-info">
+    No vacations to report.
+  </div>
+  
+  <div *ngFor="let date of objectKeys(groupedVacations)" class="mb-4">
+    <h5 class="text-primary">{{ date }}</h5>
+    <ul class="list-group">
+      <li *ngFor="let vacation of groupedVacations[date]" class="list-group-item">
+        {{ vacation.title }} ({{ vacation.startDate | date }} to {{ vacation.endDate | date }})
+      </li>
+    </ul>
+  </div>
+</div>

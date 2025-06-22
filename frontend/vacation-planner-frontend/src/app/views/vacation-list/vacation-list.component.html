@@ -1,7 +1,9 @@
 <div class="container mt-5">
   <h2 class="mb-4">Your Vacations</h2>
   <button class="btn btn-outline-success" [routerLink]="['/vacations/new']">Add New Vacation</button>
+  <button class="btn btn-outline-primary" (click)="goToReports()">Vacation Report</button>
   <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+
 
   <div *ngIf="vacations.length === 0" class="alert alert-info">
     You haven't added any vacations yet.
@@ -40,9 +42,6 @@
             data-bs-toggle="tooltip" 
             title="Delete Vacation"
           >Delete</button>
-          <i class="bi bi-trash"></i>
-
-            <!-- [disabled]="vacation.excursionCount > 0" -->
         </td>
       </tr>
     </tbody>

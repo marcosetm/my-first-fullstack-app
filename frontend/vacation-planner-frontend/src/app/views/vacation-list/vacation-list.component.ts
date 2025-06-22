@@ -87,7 +87,7 @@ export class VacationListComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  
+
   showToast(): void {
     const toastElement = document.getElementById('excursionToast');
     if (toastElement) {
@@ -95,4 +95,9 @@ export class VacationListComponent implements OnInit, AfterViewInit {
       toast.show();
     }
   }
+
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+
 }
