@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { excursionDateValidator } from '../../validators/excursion-date.validator';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-excursions',
   standalone: true,
@@ -21,6 +23,7 @@ export class ExcursionsComponent implements OnInit {
   selectedExcursion: Excursion | null = null;
   showForm = false;
   isEditMode = false;
+  excursionToDelete!: Excursion;
 
 
   constructor(private excursionService: ExcursionService, private fb: FormBuilder) {}
@@ -99,18 +102,24 @@ export class ExcursionsComponent implements OnInit {
     });
   }
 
-  deleteExcursion(excursionId: number): void {
-    if (confirm('Are you sure you want to delete this vacation?')) {
-      this.excursionService.deleteExcursion(excursionId).subscribe({
-        next: () => {
-          this.loadExcursions();
-        },
-        error: (err) => {
-          console.error('Failed to delete vacation:', err);
-          alert('Failed to delete vacation.');
-        },
-      });
-    }
+  deleteExcursion(): void {
+    this.excursionService.deleteExcursion(this.excursionToDelete.id).subscribe({
+      next: () => {
+        this.loadExcursions();
+      },
+      error: (err) => {
+        console.error('Failed to delete vacation:', err);
+        alert('Failed to delete vacation.');
+      },
+    });
   }
+  openDeleteModal(excursion: Excursion): void {
+      this.excursionToDelete = excursion;
+      const modalElement = document.getElementById('deleteModal');
+      if (modalElement) {
+        const deleteModal = new bootstrap.Modal(modalElement);
+        deleteModal.show();
+      }
+    }
 }
 
