@@ -6,7 +6,7 @@ RUN useradd -ms /bin/bash appuser
 
 WORKDIR /app
 
-COPY /target/vacation-planner-0.0.1-RELEASE.jar app.jar
+COPY ./target/vacation-planner-0.0.1-RELEASE.jar app.jar
 
 USER appuser
 
