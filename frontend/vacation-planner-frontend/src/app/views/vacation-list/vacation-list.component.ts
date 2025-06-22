@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VacationService } from '../../services/vacation.service';
 import { Vacation } from '../../models/vacation.model';
@@ -15,11 +15,13 @@ declare var bootstrap: any;
   templateUrl: './vacation-list.component.html',
   styleUrl: './vacation-list.component.css'
 })
-export class VacationListComponent implements OnInit, AfterViewInit {
+export class VacationListComponent implements OnInit {
 
   vacations: Vacation[] = [];
   user: any = {};
   searchTerm: string = '';
+  vacationToDelete!: Vacation;
+
 
   constructor(
     private vacationService: VacationService, 
@@ -39,18 +41,8 @@ export class VacationListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.initTooltips();
-  }
-
-
   ngOnInit(): void {
     this.loadVacations();
-  }
-
-  initTooltips(): void {
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach((el: any) => new bootstrap.Tooltip(el));
   }
 
   loadVacations(): void {
@@ -61,7 +53,7 @@ export class VacationListComponent implements OnInit, AfterViewInit {
         this.vacations = data.sort((a, b) =>
           new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
         );
-        this.initTooltips();
+        // this.initTooltips();
       },
       error: (err) => console.error('Error loading vacations:', err)
     });
@@ -72,11 +64,11 @@ export class VacationListComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/login']);
   }
 
-  deleteVacation(vacation: Vacation): void {
-    if (vacation.excursionCount && vacation.excursionCount > 0) {
+  deleteVacation(): void {
+    if (this.vacationToDelete.excursionCount && this.vacationToDelete.excursionCount > 0) {
       this.showToast();
-    } else if (confirm('Are you sure you want to delete this vacation?')) {
-      this.vacationService.deleteVacation(vacation.id).subscribe({
+    } else { //if (confirm('Are you sure you want to delete this vacation?'))
+      this.vacationService.deleteVacation(this.vacationToDelete.id).subscribe({
         next: () => {
           this.loadVacations();
         },
@@ -87,7 +79,11 @@ export class VacationListComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
+  
+  goToReports(): void {
+    this.router.navigate(['/reports']);
+  }
+  
   showToast(): void {
     const toastElement = document.getElementById('excursionToast');
     if (toastElement) {
@@ -96,8 +92,16 @@ export class VacationListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  goToReports(): void {
-    this.router.navigate(['/reports']);
+  openDeleteModal(vacation: Vacation): void {
+    this.vacationToDelete = vacation;
+    if (this.vacationToDelete.excursionCount && this.vacationToDelete.excursionCount > 0) {
+      this.showToast();
+    } else {
+      const modalElement = document.getElementById('deleteModal');
+      if (modalElement) {
+        const deleteModal = new bootstrap.Modal(modalElement);
+        deleteModal.show();
+      }
+    }
   }
-
 }

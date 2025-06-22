@@ -24,6 +24,7 @@ export class LoginRegisterComponent {
   lastName = '';
   regEmail = '';
   regPassword = '';
+  confirmPassword = '';
   dateOfBirth = '';
 
   constructor(
