@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VacationService } from '../../services/vacation.service';
 import { Vacation } from '../../models/vacation.model';
@@ -15,7 +15,7 @@ declare var bootstrap: any;
   templateUrl: './vacation-list.component.html',
   styleUrl: './vacation-list.component.css'
 })
-export class VacationListComponent implements OnInit {
+export class VacationListComponent implements OnInit, AfterViewInit {
 
   vacations: Vacation[] = [];
   user: any = {};
@@ -39,8 +39,18 @@ export class VacationListComponent implements OnInit {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.initTooltips();
+  }
+
+
   ngOnInit(): void {
     this.loadVacations();
+  }
+
+  initTooltips(): void {
+    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach((el: any) => new bootstrap.Tooltip(el));
   }
 
   loadVacations(): void {
@@ -51,6 +61,7 @@ export class VacationListComponent implements OnInit {
         this.vacations = data.sort((a, b) =>
           new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
         );
+        this.initTooltips();
       },
       error: (err) => console.error('Error loading vacations:', err)
     });
@@ -61,9 +72,11 @@ export class VacationListComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  deleteVacation(vacationId: number): void {
-      if (confirm('Are you sure you want to delete this vacation?')) {
-      this.vacationService.deleteVacation(vacationId).subscribe({
+  deleteVacation(vacation: Vacation): void {
+    if (vacation.excursionCount && vacation.excursionCount > 0) {
+      this.showToast();
+    } else if (confirm('Are you sure you want to delete this vacation?')) {
+      this.vacationService.deleteVacation(vacation.id).subscribe({
         next: () => {
           this.loadVacations();
         },
@@ -72,6 +85,14 @@ export class VacationListComponent implements OnInit {
           alert('Failed to delete vacation.');
         },
       });
+    }
+  }
+  
+  showToast(): void {
+    const toastElement = document.getElementById('excursionToast');
+    if (toastElement) {
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
     }
   }
 }

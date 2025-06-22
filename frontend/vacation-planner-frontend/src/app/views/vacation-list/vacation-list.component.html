@@ -34,15 +34,30 @@
         <td>{{ vacation.endDate | date }}</td>
         <td>
           <button class="btn btn-outline-primary btn-sm" [routerLink]="['/vacations', vacation.id]">View/Update</button>
-          <span tabindex="0" title="Delete vacation with no excursions.">
-            <button 
-              class="btn btn-outline-danger btn-sm"
-              [disabled]="vacation.excursionCount > 0"
-              (click)="deleteVacation(vacation.id)"
-            >Delete</button>
-          </span>
+          <button 
+            class="btn btn-outline-danger btn-sm"
+            (click)="deleteVacation(vacation)"
+            data-bs-toggle="tooltip" 
+            title="Delete Vacation"
+          >Delete</button>
+          <i class="bi bi-trash"></i>
+
+            <!-- [disabled]="vacation.excursionCount > 0" -->
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<!-- Toast Container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="excursionToast" class="toast align-items-center bg-warning-subtle" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Vacations with excursions cannot be deleted. Please delete excursions first.
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
