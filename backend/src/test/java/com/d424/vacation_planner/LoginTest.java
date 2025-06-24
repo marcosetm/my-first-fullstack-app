@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginTest {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     private UserController userController;
 
     @Test
