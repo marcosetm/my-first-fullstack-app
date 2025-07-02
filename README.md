@@ -1,2 +1,2 @@
-# WESTERN GOVERNORS UNIVERSITY 
-## D424 – SOFTWARE ENGINEERING CAPSTONE
+# Deploy Branch
+Contains `.jar` file and update configs for deployment.
