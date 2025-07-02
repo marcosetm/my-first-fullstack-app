@@ -1,6 +1,3 @@
-# WESTERN GOVERNORS UNIVERSITY 
-## D424 – SOFTWARE ENGINEERING CAPSTONE
-
 # Vacation Planner Web App
 
 The Vacation Planner Web App is a full-stack application that allows users to manage their vacation plans and associated excursions. Built with Angular on the frontend and Spring Boot on the backend, it uses PostgreSQL for data persistence.
